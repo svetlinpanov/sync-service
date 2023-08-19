@@ -1,0 +1,53 @@
+service: sync-service
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  environment:
+    NODE_ENV: dev
+    DB_URL: mongodb+srv://svetlinpanov:JskFzNPl55AZLvIz@cluster0.pdklf.mongodb.net/sync?retryWrites=true
+
+plugins:
+  - serverless-plugin-typescript 
+  - serverless-offline
+
+package:
+  exclude:
+    - config/.env.stg
+    - config/.env.pro
+  include:
+    - config/.env.dev
+
+functions:
+  get:
+    handler: src/handler.getAllDataRecords
+    events:
+      - http:
+          path: /data-records
+          method: get
+  sync:
+    handler: src/handler.syncDataRecords
+    events:
+      - http:
+          path: /data-records/sync
+          method: put
+  create:
+    handler: src/handler.createDataRecords
+    events:
+      - http:
+          path: /data-records/create
+          method: post
+  update:
+    handler: src/handler.updateDataRecords
+    events:
+      - http:
+          path: /data-records
+          method: put
+
+  delete:
+    handler: src/handler.deleteDataRecords
+    events:
+      - http:
+          path: /data-records/delete
+          method: delete
