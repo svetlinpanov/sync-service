@@ -6,7 +6,7 @@ provider:
   runtime: nodejs18.x
   environment:
     NODE_ENV: dev
-    DB_URL: mongodb+srv://svetlinpanov:JskFzNPl55AZLvIz@cluster0.pdklf.mongodb.net/sync?retryWrites=true
+    DB_URL: mongodb+srv://mongocluster/sync?retryWrites=true
 
 plugins:
   - serverless-plugin-typescript 
